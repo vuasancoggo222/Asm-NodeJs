@@ -2,7 +2,7 @@ import { useState } from 'react'
 import logo from './logo.svg'
 import { useEffect } from 'react'
 import './App.css'
-import type { ProductType } from './Types/product'
+import type { ProductType } from './Client/Types/product'
 import axios from 'axios'
 const App = () => {
   
