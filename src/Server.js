@@ -13,7 +13,7 @@ mongoose.connect("mongodb://localhost:27017/assignment")
     .then(() => console.log("Ket noi DB thanh cong"))
     .catch(error => console.log(error))
 // connect
-const PORT = 8000;
+const PORT = 8001;
 app.listen(PORT, () => {
     console.log("Server của bạn đang chạy cổng ", PORT);
 });

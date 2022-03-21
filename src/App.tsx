@@ -1,27 +1,51 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import { useEffect } from 'react'
-import './App.css'
-import type { ProductType } from './Client/Types/product'
-import axios from 'axios'
+import { useState } from "react";
+import "./index.css";
+import logo from "./logo.svg";
+import { useEffect } from "react";
+import { Routes, Route, NavLink, Navigate } from "react-router-dom";
+import type { ProductType } from "./Client/Types/product";
+import { list } from "./Client/Api/product";
+import AdminLayout from "./Client/Pages/layouts/AdminLayout";
+import Dashboard from "./Client/Pages/admin/DashBoard";
+import ProductManager from "./Client/Pages/admin/Product/Product";
+import CategoryManager from "./Client/Pages/admin/Category/CategoryManager";
+import NewsManager from "./Client/Pages/admin/News/NewsManager";
+import OrderManager from "./Client/Pages/admin/Order/OrderManager";
+import ContactManager from "./Client/Pages/admin/Contact/ContactManager";
+import UserManager from "./Client/Pages/admin/User/UserManager";
+import WebsiteLayout from "./Client/Pages/layouts/WebsiteLayout";
 const App = () => {
-  
   const [products, setProducts] = useState<ProductType[]>([]); // 1
-  
-  useEffect(() => { // 3
+
+  useEffect(() => {
+    // 3
     const getProducts = async () => {
-       const { data } = await axios.get('http://localhost:8000/api/products');
-       console.log(data);
-       setProducts(data);
-    }
+      const { data } = await list();
+      console.log(data);
+      setProducts(data);
+    };
     getProducts();
- },[])
+  }, []);
 
   return (
     <div className="App">
-     
-    </div>
-  )
-}
+      <Routes>
+        <Route path="/" element={<WebsiteLayout />}>
 
-export default App
+        </Route>
+        <Route path="admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="product" element={<ProductManager />} />
+          <Route path="category" element={<CategoryManager />} />
+          <Route path="news" element={<NewsManager />} />
+          <Route path="orders" element={<OrderManager />} />
+          <Route path="contact" element={<ContactManager />} />
+          <Route path="user" element={<UserManager />} />
+          <Route path="order" element={<OrderManager />} />
+        </Route>
+      </Routes>
+    </div>
+  );
+};
+export default App;
