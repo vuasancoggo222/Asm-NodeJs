@@ -1,19 +1,25 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Footer from '../../Components/Footer'
-import Header from '../../Components/Header'
-import Navigation from '../../Components/Navigation'
+import HeaderLayout from '../../Components/Header'
+import { Layout } from "antd";
+import FooterLayout from '../../Components/Footer';
+import SiderLayout from '../../Components/SiderLayout';
+import ContentLayout from '../../Components/ContentLayout';
+import SliderLayout from '../../Components/SliderLayout';
+
 type Props = {}
 
 const WebsiteLayout = (props: Props) => {
   return (
-    <div>
-      <Header/>
-      <Navigation/>
+    <Layout className="layout" style={{margin:"0 10px"}}>
+      <HeaderLayout/>
+      <SliderLayout/>
+      <Layout>
+      <SiderLayout/> 
+      </Layout>
       <Outlet/>
-      <Footer/>
-    </div>
-    
+      <FooterLayout/>
+    </Layout>
   )
 }
 

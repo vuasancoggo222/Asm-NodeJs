@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ProductType } from "../../../Types/product";
 
 type ProductManagerProps = {
@@ -69,7 +70,7 @@ const ProductManager = (props: ProductManagerProps) => {
             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
             <button className="h-10 px-5 m-2 text-green-100 transition-colors duration-150
              bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800">
-              Update</button>
+              <Link to={`/admin/product/${product._id}/edit`}>Update</Link></button>
               <button className="h-10 px-5 m-2 text-red-100 transition-colors duration-150
                bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-800">Delete</button>
             </td>

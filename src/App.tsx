@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./index.css";
-import logo from "./logo.svg";
+import 'antd/dist/antd.css';
 import { useEffect } from "react";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
 import type { ProductType } from "./Client/Types/product";
@@ -14,6 +14,9 @@ import OrderManager from "./Client/Pages/admin/Order/OrderManager";
 import ContactManager from "./Client/Pages/admin/Contact/ContactManager";
 import UserManager from "./Client/Pages/admin/User/UserManager";
 import WebsiteLayout from "./Client/Pages/layouts/WebsiteLayout";
+import ProductEdit from "./Client/Pages/admin/Product/ProductEdit";
+import PrivateRouter from "./Client/Components/PrivateRouter";
+
 const App = () => {
   const [products, setProducts] = useState<ProductType[]>([]); // 1
   useEffect(() => {
@@ -24,16 +27,24 @@ const App = () => {
     };
     getProducts();
   }, []);
+
+  const handleSignin = ()=>{
+    console.log(1);
+    
+  }
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<WebsiteLayout />}>
-
+        {/* <Route path="login" element={<Login onFinish={handleSignin} />} /> */}
         </Route>
-        <Route path="admin" element={<AdminLayout />}>
+        <Route path="admin" element={<PrivateRouter><AdminLayout/></PrivateRouter>}>
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="product" element={<ProductManager data={products} />} />
+          <Route path="product">
+           <Route index element={<ProductManager data={products} />}/>
+           <Route path=":id/edit" element={<ProductEdit/>}/>
+          </Route>
           <Route path="category" element={<CategoryManager />} />
           <Route path="news" element={<NewsManager />} />
           <Route path="orders" element={<OrderManager />} />
