@@ -12,15 +12,15 @@ console.log(error);
 }
 //Create
 export const create = async (req, res) => {
- try {
-    const product = await new Product(req.body).save()
-    res.json(product);
- }
- catch(error){
-     res.status(400).json({
-         error:"Khong thanh cong"
-     })
- }
+    console.log(req.body)
+    try {
+        const product = await new Product(req.body).save();
+        res.json(product);
+    } catch (error) {
+        res.status(400).json({
+            error: "Không thêm được sản phẩm"
+        })
+    }
 }
 //GetOne
 export const get = async (req, res) => {
@@ -36,12 +36,13 @@ export const get = async (req, res) => {
 export const update =  async (req, res) => {
     const condition = { _id : req.params.id }
     const update = req.body
+    const options = {new:true}
     try {
-        const product = await Product.findOneAndUpdate(condition,update).exec()
+        const product = await Product.findOneAndUpdate(condition,update,options).exec()
         res.json(product)
        }
        catch (err) {
-           console.log(err);
+           console.log("Khong  update dc");
        }
 }
 //Delete

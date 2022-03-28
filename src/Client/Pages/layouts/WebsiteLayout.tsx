@@ -11,7 +11,7 @@ type Props = {}
 
 const WebsiteLayout = (props: Props) => {
   return (
-    <Layout className="layout" style={{margin:"0 10px"}}>
+    <Layout className="layout" style={{margin:"0 15px"}}>
       <HeaderLayout/>
       <SliderLayout/>
       <Layout>

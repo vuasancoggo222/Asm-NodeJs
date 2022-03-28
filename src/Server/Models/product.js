@@ -11,9 +11,21 @@ const ProductSchema = new Schema({
         type : Number,
         required : true
     },
-    // category:{
-    //     type : ObjectId,
-    //     ref: "Category"
-    // }
+    category:{
+        type : ObjectId,
+        ref: "Category",
+        required : true
+    },
+    description: {
+        type : String,
+        required : true,
+    },
+    image: {
+        type : String,
+        required : true,
+    },
+    status:{
+        type : Boolean,
+    } 
 },{timestamps: true})
 export default  mongoose.model('Product',ProductSchema)

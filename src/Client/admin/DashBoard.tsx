@@ -1,5 +1,5 @@
 import React from 'react'
-import NavAdmin from '../../Components/NavAdmin'
+import NavAdmin from '../../Components/admin/NavAdmin'
 type Props = {}
 
 const DashBoard = (props: Props) => {
