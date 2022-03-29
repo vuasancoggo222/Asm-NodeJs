@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import productRoute from "./Server/Routes/product";
 import categoryRoute from './Server/Routes/category'
+import authRoute from "./Server/Routes/auth"
 const app = express();
 // middleware
 
@@ -12,7 +13,7 @@ app.use(morgan('tiny'))
 app.use(express.json())
 app.use("/api",productRoute)
 app.use("/api",categoryRoute)
-
+app.use("/api",authRoute)
 //connect Database
 mongoose.connect("mongodb://localhost:27017/assignment")
     .then(() => console.log("Ket noi DB thanh cong"))

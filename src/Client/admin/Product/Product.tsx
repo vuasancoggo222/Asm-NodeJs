@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductType } from "../../Types/product";
-import { Table, Tag, Space, Button, Modal } from "antd";
+import { Table, Tag, Space, Button, Modal,notification,message } from "antd";
 import { PlusSquareOutlined } from "@ant-design/icons";
-
 type ProductManagerProps = {
   data: ProductType[];
   onRemove: (id: number) => void;
@@ -19,6 +18,12 @@ type DataType = {
 };
 const ProductManager = (props: ProductManagerProps) => {
   const [visible, setVisible] = useState(false);
+  const [description,setDescription] = useState([]);
+  const getDescription =(record:any) =>{
+    setVisible(true);
+    console.log(record);
+    setDescription(record);
+  }
   const columns = [
     {
       title: "#",
@@ -51,7 +56,7 @@ const ProductManager = (props: ProductManagerProps) => {
       key: "description",
       dataIndex: "description",
       render: (record: any) => (
-        <Button onClick={() => setVisible(true)}>Xem chi tiết</Button>
+        <Button onClick={()=> getDescription(record)}>Xem chi tiết</Button>
       ),
     },
     {
@@ -94,21 +99,22 @@ const ProductManager = (props: ProductManagerProps) => {
   return (
     <div>
       <Table
-        style={{ marginLeft:"100px",width: "1200px"}}
+        style={{ marginLeft:"100px",width: "1170px"}}
         columns={columns}
         dataSource={Productdata}
         rowKey="key"
       >
       </Table>
-
       <Modal
-        title="Product description"
+      cancelText
+        title="Mô tả sản phẩm"
         centered
         visible={visible}
         onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
-        width={1000}
-      ></Modal>
+        width={800}
+        mask
+      ><p>{description}</p></Modal>
     </div>
   );
 };

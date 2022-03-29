@@ -16,8 +16,11 @@ import UserManager from "./Client/admin/User/UserManager";
 import WebsiteLayout from "./Client/Pages/layouts/WebsiteLayout";
 import ProductEdit from "./Client/admin/Product/ProductEdit";
 import PrivateRouter from "./Client/Components/PrivateRouter";
-import { Modal } from "antd";
+import { Modal,message } from "antd";
 import ProductAdd from "./Client/admin/Product/ProductAdd";
+import SignIn from "./Client/Pages/auth/SignIn";
+import SignUp from "./Client/Pages/auth/SignUp";
+import Home from "./Client/Pages/website/Home";
 
 const App = () => {
   //Products
@@ -37,6 +40,7 @@ const App = () => {
       onOk: async () => {
         console.log(id);
          await removeProduct(id)
+          message.success('Delete product successfully',2);
         setProducts(products.filter(item => item._id !== id));
       }
     })
@@ -63,8 +67,10 @@ try {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<WebsiteLayout />}>
-        {/* <Route path="login" element={<Login onFinish={handleSignin} />} /> */}
+        <Route element={<WebsiteLayout />}>
+        <Route path="/" element={<Home/>} />
+        <Route path="sign-in" element={<SignIn/>} />
+        <Route path="sign-up" element={<SignUp/>} />
         </Route>
         <Route path="admin" element={<AdminLayout/>}>
           <Route index element={<Navigate to="dashboard" />} />
