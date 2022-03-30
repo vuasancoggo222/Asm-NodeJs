@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./index.css";
+import "./App.css"
 import 'antd/dist/antd.css';
 import { useEffect } from "react";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
@@ -21,6 +22,7 @@ import ProductAdd from "./Client/admin/Product/ProductAdd";
 import SignIn from "./Client/Pages/auth/SignIn";
 import SignUp from "./Client/Pages/auth/SignUp";
 import Home from "./Client/Pages/website/Home";
+import { signin, signup } from "./Client/Api/auth";
 
 const App = () => {
   //Products
@@ -64,13 +66,33 @@ try {
     console.log("Khong thanh cong");
   }
   }
+  //SignIn
+  const handleSignIn = async (user : UserType) => {
+   try {
+     const {data} = await signin(user);
+     console.log(data);
+     
+   } catch (error) {
+     console.log(error);
+     
+   } 
+  }
+//Sign up
+const handleSignUp = async (user : UserType) => {
+  try {
+    const {data} = await signup(user)
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
   return (
-    <div className="App">
+    <div className="App mx-auto max-w-screen-2xl">
       <Routes>
         <Route element={<WebsiteLayout />}>
         <Route path="/" element={<Home/>} />
-        <Route path="sign-in" element={<SignIn/>} />
-        <Route path="sign-up" element={<SignUp/>} />
+        <Route path="sign-in" element={<SignIn onSignin={handleSignIn} />} />
+        <Route path="sign-up" element={<SignUp onSignup={handleSignUp} />} />
         </Route>
         <Route path="admin" element={<AdminLayout/>}>
           <Route index element={<Navigate to="dashboard" />} />
