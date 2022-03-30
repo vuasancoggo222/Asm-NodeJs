@@ -1,17 +1,19 @@
 import { Layout } from 'antd'
 import React from 'react'
 import SiderLayout from '../../Components/SiderLayout'
-import SliderLayout from '../../Components/SliderLayout'
+import CarouselLayout from '../../Components/CarouselLayout'
 
 type Props = {}
 
 const Home = (props: Props) => {
   return (
    <div>
-      <SliderLayout/>
+  <>
+  <CarouselLayout/>
     <Layout>
     <SiderLayout/> 
     </Layout>
+  </>
    </div>
   )
 }

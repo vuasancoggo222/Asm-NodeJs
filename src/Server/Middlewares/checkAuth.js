@@ -1,7 +1,7 @@
 import expressJWT from 'express-jwt';
 export const requiredSigin = expressJWT({
     algorithms: ['HS256'],
-    secret: '123456',
+    secret: 'ayaya',
     requestProperty: "auth" // req.auth
 });
 export const isAuth = (req, res, next) => {

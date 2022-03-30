@@ -5,17 +5,17 @@ export const signin = async (req, res) => {
    try {
     const user = await Users.findOne({email}).exec();
     if(!user){
-        res.status(404).json({
+        return res.status(400).json({
             message: "Cannot find user"
         })
     }
     if(!user.authenticate(password)){
-        res.status(400).json({
+        return res.status(400).json({
             message: "Password is incorrect"
         })
     }
     const token = jwt.sign({_id: user._id},"ayaya",{expiresIn : "12h"})
-    res.json({
+    return res.json({
         user: {
             token,
             _id: user._id,

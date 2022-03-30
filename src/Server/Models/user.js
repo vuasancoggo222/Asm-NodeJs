@@ -20,6 +20,10 @@ const userSchema = new Schema({
     },
     address : {
         type : String,
+        },
+        role: {
+            type: Number,
+            default: 0
         }
 },{ timestamps: true})
 

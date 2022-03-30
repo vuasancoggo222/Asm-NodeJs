@@ -1,8 +1,8 @@
-import React from "react";
-import { Button, Carousel } from "antd";
+import React, { useState } from "react";
+import { Button, Carousel, Radio } from "antd";
 type Props = {};
 
-const SliderLayout = (props: Props) => {
+const CarouselLayout = (props: Props) => {
   const contentStyle: {} = {
     height: "480px",
     color: "black",
@@ -69,4 +69,4 @@ const SliderLayout = (props: Props) => {
   );
 };
 
-export default SliderLayout;
+export default CarouselLayout;

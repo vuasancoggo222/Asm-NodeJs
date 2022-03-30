@@ -1,13 +1,19 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd'
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { UserType } from '../../Types/user';
 
-type Props = {}
+
+type Props = {
+  onSignin : (user : UserType)=>void;
+}
 
 const SignIn = (props: Props) => {
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const onFinish = (values: UserType) => {
+   props.onSignin(values);
+
   };
   return (
     <div style={{ margin:"30px auto"}}>
@@ -20,25 +26,26 @@ const SignIn = (props: Props) => {
       onFinish={onFinish}
     >
       <Form.Item
-        name="username"
-        rules={[{ required: true, message: 'Please input your Username!' }]}
+        name="email"
+        rules={[{ required: true, message: 'Please input your email!' }]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true, message: 'Please input your Password!' }]}
+        rules={[{ required: true, message: 'Please input your password!' }]}
+        
       >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
+    <Input.Password className ="mt-3"
+    prefix={<LockOutlined className="site-form-item-icon" />}
+      placeholder="Password"
+      iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+    />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" style={{ width: "100%"}} className="login-form-button">
+        <Button  type="primary" htmlType="submit" style={{ width: "100%"}} className=" mt-3 login-form-button">
           Log in
-        </Button><span style={{marginTop:"10px"}}>You don't have an account ? </span>
+        </Button><span  style={{marginTop:"10px"}}>You don't have an account ? </span>
         <br /><Link to="/sign-up" className=""> register now!</Link>
       </Form.Item>
     </Form>
