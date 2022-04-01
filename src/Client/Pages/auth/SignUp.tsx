@@ -54,7 +54,7 @@ const SignUp = (props: SignUpProps) => {
       <Button type="primary" htmlType="submit" style={{ width: "100%"}} className="login-form-button">
        Register
       </Button><span style={{marginTop:"10px"}}>You have an account ?  </span>
-      <br /><Link to="/sign-up" className="">login now!</Link>
+      <br /><Link to="/sign-in" className="">login now!</Link>
     </Form.Item>
   </Form>
   </div>

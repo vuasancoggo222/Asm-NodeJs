@@ -24,7 +24,7 @@ export const signin = async (req, res) => {
         }
     })
    } catch (error) {
-       res.status(400).json({
+      return  res.status(400).json({
            message : "Loggin failed,please try again later",
        })
    }
@@ -34,12 +34,12 @@ export const signup = async (req, res) => {
     try {
         const existUser = await Users.findOne({email}).exec();
         if(existUser){
-            res.status(400).json({
+            return res.status(400).json({
                 message: "Tài khoản đã tồn tại"
             })
         }
         const user = await new Users({email, name, password}).save();
-        res.json({
+       return res.json({
             user: {
                 _id: user._id,
                 email: user.email,
@@ -47,7 +47,7 @@ export const signup = async (req, res) => {
             }
         });
     } catch (error) {
- res.status(400).json({
+ return res.status(400).json({
      message : "Cannot signup account"
  })
     }

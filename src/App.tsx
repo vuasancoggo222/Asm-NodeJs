@@ -17,16 +17,18 @@ import UserManager from "./Client/admin/User/UserManager";
 import WebsiteLayout from "./Client/Pages/layouts/WebsiteLayout";
 import ProductEdit from "./Client/admin/Product/ProductEdit";
 import PrivateRouter from "./Client/Components/PrivateRouter";
-import { Modal,message } from "antd";
+import { Modal,message, notification } from "antd";
 import ProductAdd from "./Client/admin/Product/ProductAdd";
 import SignIn from "./Client/Pages/auth/SignIn";
 import SignUp from "./Client/Pages/auth/SignUp";
 import Home from "./Client/Pages/website/Home";
 import { signin, signup } from "./Client/Api/auth";
-
+import { UserType } from "./Client/Types/user";
+import {useNavigate} from "react-router-dom"
 const App = () => {
+  const navigate = useNavigate()
   //Products
-  const [products, setProducts] = useState<ProductType[]>([]); // 1
+  const [products, setProducts] = useState<ProductType[]>([]); 
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await productList();
@@ -70,27 +72,41 @@ try {
   const handleSignIn = async (user : UserType) => {
    try {
      const {data} = await signin(user);
-     console.log(data);
-     
-   } catch (error) {
-     console.log(error);
-     
+   
+     notification.success({
+       message: `Login successfully!!`,
+       description: `Welcome to my website ${data.user.name}`
+     })
+     localStorage.setItem('user',JSON.stringify(data));
+     navigate('/')
+   } catch (error:any) {
+    notification.error({
+      message: `Login failed !!`,
+      description: `${error.response.data.message}`,
+    })
    } 
   }
 //Sign up
 const handleSignUp = async (user : UserType) => {
   try {
     const {data} = await signup(user)
-  } catch (error) {
-    console.log(error);
+    notification.success({
+      message: `Register successfully!!`,
+      description: `Please login your account`
+    })
+  } catch (error:any) {
+    notification.error({
+      message: `Login failed !!`,
+      description: `${error.response.data.message}`,
+    })
     
   }
 }
   return (
-    <div className="App mx-auto max-w-screen-2xl">
+    <div className="App ">
       <Routes>
         <Route element={<WebsiteLayout />}>
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<Home products={products} />} />
         <Route path="sign-in" element={<SignIn onSignin={handleSignIn} />} />
         <Route path="sign-up" element={<SignUp onSignup={handleSignUp} />} />
         </Route>

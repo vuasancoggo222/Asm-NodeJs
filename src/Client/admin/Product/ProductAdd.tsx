@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
-import { Form, Input, Button, InputNumber, Switch } from "antd";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Button, InputNumber, Switch, Select } from "antd";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ProductType } from "../../Types/product";
 import { Alert } from "antd";
+import { Option } from "antd/lib/mentions";
+import {Categorylist} from '../../Api/category'
 type ProductAddProps = {
   onAdd: (product: ProductType) => void;
 };
 
 const ProductAdd = (props: ProductAddProps) => {
-  const navigate = useNavigate();
+  const [category, setCategory] = useState([])
+    const navigate = useNavigate();
   const onFinish = (values: ProductType) => {
     console.log("Success:", values);
     props.onAdd(values);
@@ -19,7 +22,16 @@ const ProductAdd = (props: ProductAddProps) => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
+  useEffect(() => {
+    const getCategory = async () => {
+      const { data } = await Categorylist();
+      console.log(data);
+      setCategory(data)
+    };
+    getCategory();
+  },[])
+  console.log(category);
+  
   return (
     <Form
       labelCol={{ span: 6 }}
@@ -49,8 +61,13 @@ const ProductAdd = (props: ProductAddProps) => {
       <Form.Item label="URL" name="image" rules={[{ required: true, message:"Please input image" }]}>
         <Input placeholder="input placeholder" />
       </Form.Item>
-      <Form.Item label="Category" name="category" rules={[{ required: true, message:"Please sellect category" }]}>
-        <Input />
+      <Form.Item label="Select" name="category" >
+        <Select>
+          {category && category.map((item : ProductType,index) => { 
+            return <Select.Option key={index} value={item._id}>{item.name}</Select.Option>
+          }
+          )}
+        </Select>
       </Form.Item>
       <Form.Item
         label="Stocking"

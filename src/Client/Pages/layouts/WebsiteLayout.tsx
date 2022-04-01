@@ -3,9 +3,12 @@ import { Outlet } from 'react-router-dom'
 import HeaderLayout from '../../Components/Header'
 import { Layout } from "antd";
 import FooterLayout from '../../Components/Footer';
-type Props = {}
+import { ProductType } from '../../Types/product';
+type WebsiteLayoutProps = {
+ 
+}
 
-const WebsiteLayout = (props: Props) => {
+const WebsiteLayout = (props: WebsiteLayoutProps) => {
   return (
     <Layout className="layout" style={{margin:"0 15px"}}>
       <HeaderLayout/>

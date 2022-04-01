@@ -17,8 +17,10 @@ const HeaderLayout = (props: Props) => {
          <MenuItem key="news"><NavLink to="news">News</NavLink></MenuItem>
          <MenuItem key="contact"><NavLink to="contact">Contact</NavLink></MenuItem>
          <MenuItem key="about"><NavLink to="about">About</NavLink></MenuItem>
-         <MenuItem style={{ marginLeft: "620px" }} key="signin"><NavLink to="sign-in">Sign In</NavLink></MenuItem>
-         <MenuItem key="signup"><NavLink to="sign-up">Sign Up</NavLink></MenuItem>
+         {(localStorage.getItem('user')) ? <><MenuItem style={{ marginLeft: "620px" }} key=""><NavLink to="sign-in">User</NavLink></MenuItem>
+         <MenuItem key="logout"><NavLink to="sign-up">Log Out</NavLink></MenuItem></>   : <><MenuItem style={{ marginLeft: "620px" }} key="signin"><NavLink to="sign-in">Sign In</NavLink></MenuItem>
+         <MenuItem key="signup"><NavLink to="sign-up">Sign Up</NavLink></MenuItem></>}
+         
        </Menu>
     </Header>
    </div>

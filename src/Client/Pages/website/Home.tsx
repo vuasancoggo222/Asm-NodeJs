@@ -2,19 +2,24 @@ import { Layout } from 'antd'
 import React from 'react'
 import SiderLayout from '../../Components/SiderLayout'
 import CarouselLayout from '../../Components/CarouselLayout'
+import ContentLayout from '../../Components/ContentLayout'
+import { ProductType } from '../../Types/product'
 
-type Props = {}
+type Props = {
+  products : ProductType[]
+}
 
 const Home = (props: Props) => {
+  console.log(props);
+  
   return (
-   <div>
   <>
   <CarouselLayout/>
     <Layout>
-    <SiderLayout/> 
+    <SiderLayout/>
+    <ContentLayout products={props.products}/> 
     </Layout>
   </>
-   </div>
   )
 }
 

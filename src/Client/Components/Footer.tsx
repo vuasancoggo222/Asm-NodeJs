@@ -5,7 +5,7 @@ type Props = {}
 
 const FooterLayout = (props: Props) => {
   return (
-    <Footer className="text-center">This is a footer</Footer>
+    <Footer style={{ textAlign: 'center' }}>This is a footer</Footer>
   )
 }
 
