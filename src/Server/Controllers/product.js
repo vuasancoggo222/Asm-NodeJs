@@ -64,3 +64,15 @@ res.status(400).json({
 })
   }
 }
+// Get latest product
+export const getLatest = async (req, res) => {
+const limit = req.params.limit
+try {
+    const product = await Product.find().sort({_id : -1}).limit(limit)
+    res.json(product)
+} catch (error) {
+    res.status(400).json({
+        message: "Không thể lấy sản phẩm mới nhất"
+    })
+}
+}
