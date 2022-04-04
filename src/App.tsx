@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { useEffect } from "react";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
 import type { ProductType } from "./Client/Types/product";
-import { createProduct, productList,removeProduct, updateProduct} from "./Client/Api/product";
+import { createProduct, getLatest, productList,removeProduct, updateProduct} from "./Client/Api/product";
 import AdminLayout from "./Client/Pages/layouts/AdminLayout";
 import Dashboard from "./Client/admin/DashBoard";
 import ProductManager from "./Client/admin/Product/Product";
@@ -28,11 +28,13 @@ import {useNavigate} from "react-router-dom"
 import { Categorylist } from "./Client/Api/category";
 import { CategoryType } from "./Client/Types/category";
 import { authenticate } from "./Client/utils/localStorage";
+import Products from "./Client/Pages/website/Products";
 const App = () => {
   const navigate = useNavigate()
   //Products
   const [products, setProducts] = useState<ProductType[]>([]); 
   const [category, setCategory] = useState<CategoryType[]>([]);
+  const [latestProduct, setLatestProduct] = useState<ProductType[]>([]);
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await productList();
@@ -120,12 +122,23 @@ useEffect(() => {
   }
   getCategory()
 },[])
+
+// Get latest products
+useEffect(() => {
+  const getLatestProducts = async () => {
+    const limit = 4
+    const {data} = await getLatest(limit)
+    setLatestProduct(data)  
+  }
+  getLatestProducts()
+},[])
   return (
     <div className="App ">
       <Routes>
         <Route element={<WebsiteLayout/>}>
-        <Route path="/" element={<Home products={products} category={category} />} />
-        <Route path="sign-in" element={<SignIn onSignin={handleSignIn} />} />
+        <Route path="/" element={<Home products={products} category={category} latestProduct={latestProduct} />} />
+        <Route path="products" element={<SignIn onSignin={handleSignIn} />} />
+        <Route path="sign-in" element={<Products/>} />
         <Route path="sign-up" element={<SignUp onSignup={handleSignUp} />} />
         </Route>
         <Route path="admin" element={<PrivateRouter><AdminLayout/></PrivateRouter>}>

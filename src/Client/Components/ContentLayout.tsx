@@ -2,19 +2,33 @@ import { Col, Row, Slider } from 'antd'
 import React from 'react'
 import { ProductType } from '../Types/product'
 type Props = {
- products: ProductType[]
+latestProduct : ProductType[]
 }
 
 const ContentLayout = (props: Props) => {
-  console.log(props.products);
+  console.log(props.latestProduct);
   
   const style = {padding: '8px 0' };
   return (
-   <div style={{marginLeft:"45px"}}>
-    {props.products && props.products.map((item) => {
-      
+   <div style={{marginLeft:"120px"}}>
+   <div>
+     <h2 style={{textAlign: 'center'}}>Sản phẩm mới nhất</h2>
+   <Row gutter={[32, 32]}>
+    {props.latestProduct && props.latestProduct.map((item) => {
+      return <Col span={6}>
+      <div style={style}>
+        <img src={item.image[0].url} width="240px" alt="" />
+       <div style={{textAlign: 'center'}}>
+       <span>{item.name}</span> <br />
+        <span>{item.price}</span>
+       </div>
+      </div>
+    </Col>
       
     })}
+    </Row>
+   </div>
+  
    </div>
   )
 }

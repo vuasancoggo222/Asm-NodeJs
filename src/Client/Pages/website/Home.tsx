@@ -9,6 +9,7 @@ import { CategoryType } from '../../Types/category'
 type Props = {
   products : ProductType[]
   category : CategoryType[]
+  latestProduct : ProductType[]
 }
 
 const Home = (props: Props) => {
@@ -19,7 +20,7 @@ const Home = (props: Props) => {
   <CarouselLayout/>
     <Layout>
     <SiderLayout category={props.category}/>
-    <ContentLayout products={props.products}/> 
+    <ContentLayout latestProduct={props.latestProduct}/> 
     </Layout>
   </>
   )

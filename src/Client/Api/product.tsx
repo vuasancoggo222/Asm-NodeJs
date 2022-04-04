@@ -27,3 +27,7 @@ export const read = ( id : number ) => {
     const url = `product/${id}/${user._id}`;
     return instance.delete(url,header);
   };
+  export const getLatest = (limit : number) =>{
+    const url = `products-latest/limit=${limit}`
+    return instance.get(url,header)
+  }
