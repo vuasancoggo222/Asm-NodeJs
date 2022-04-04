@@ -4,6 +4,7 @@ import HeaderLayout from '../../Components/Header'
 import { Layout } from "antd";
 import FooterLayout from '../../Components/Footer';
 import { ProductType } from '../../Types/product';
+import { CategoryType } from '../../Types/category';
 type WebsiteLayoutProps = {
  
 }

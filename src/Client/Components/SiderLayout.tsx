@@ -1,11 +1,16 @@
 import React from 'react'
 import { Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, TagsOutlined, SortAscendingOutlined, ColumnHeightOutlined, SortDescendingOutlined } from '@ant-design/icons';
+import { CategoryType } from '../Types/category';
 const { SubMenu } = Menu;
 const { Sider } = Layout;
-type Props = {}
+type SiderLayoutProps = {
+  category:  CategoryType[]
+}
 
-const SiderLayout = (props: Props) => {
+const SiderLayout = (props: SiderLayoutProps) => {
+  console.log(props);
+  
   return (
     <Sider width={220} className="site-layout-background">
     <Menu
@@ -15,10 +20,9 @@ const SiderLayout = (props: Props) => {
       style={{ height: '100%', borderRight: 0 }}
     >
       <SubMenu key="sub1" icon={<TagsOutlined />} title="Category">
-        <Menu.Item key="1">Danh Mục 1</Menu.Item>
-        <Menu.Item key="2">Danh Mục 2</Menu.Item>
-        <Menu.Item key="3">Danh Mục 3</Menu.Item>
-        <Menu.Item key="4">Danh Mục 4</Menu.Item>
+        {props.category && props.category.map((item,index)=>{
+          return <Menu.Item key={item._id}>{item.name}</Menu.Item>
+        })}
       </SubMenu>
       <SubMenu key="sub2" icon={<ColumnHeightOutlined />}  title="Sort">
         <Menu.Item icon={<SortAscendingOutlined />}  key="5">Sort Ascending</Menu.Item>

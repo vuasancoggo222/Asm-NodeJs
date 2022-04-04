@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import {read} from "../../Api/product"
-import { Form, Input, Button, InputNumber, Switch } from "antd";
+import { Form, Input, Button, InputNumber, Switch, notification, Upload, Select } from "antd";
 import { ProductType } from "../../Types/product";
+import ImgCrop from 'antd-img-crop';
+import axios from 'axios';
+import { Categorylist } from '../../Api/category';
 type ProductEditProps = {
     onUpdate : (product: ProductType) => void
 }
@@ -10,11 +13,47 @@ type ProductEditProps = {
 const ProductEdit = (props: ProductEditProps) => {
     const {id} = useParams()
     const [form] = Form.useForm();
-    const navigate = useNavigate()
+    const [url,setUrl] = useState([])
+    const [category, setCategory] = useState([])
+  const [defaultFileList, setDefaultFileList] = useState([]);
+  const uploadImage = async (options:any) => {
+    const { onSuccess, onError, file } = options;
+    const formData = new FormData();
+    
+    formData.append("file", file);
+    formData.append("upload_preset", "ypnhyinn");
+    try {
+      const res = await axios({
+        url: "https://api.cloudinary.com/v1_1/ecma/image/upload",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-formendcoded",
+        },
+        data: formData,
+      }
+      
+      );
+      onSuccess('Ok');
+      notification.success({
+       "message" : "Upload successfully !",
+       "description": "Image uploaded successfully to Cloudinary !!"
+      })
+      console.log("server res: ", res);
+      setUrl([...url,{imgname: res.data.original_filename,url : res.data.secure_url} ])
+    } catch (err) {
+      console.log("Error: ", err);
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }:any) => {
+    setDefaultFileList(fileList);
+    // console.log(file);
+    
+  };
     useEffect(() => {
     const getProducts =  async () =>{
         const {data} = await read(id)
-        console.log(data);
         form.setFieldsValue({
             name: data.name,
             price : data.price,
@@ -25,13 +64,19 @@ const ProductEdit = (props: ProductEditProps) => {
     }
     getProducts()
     },[])
+    useEffect(() => {
+      const getCategory = async () => {
+        const { data } = await Categorylist();
+        console.log(data);
+        setCategory(data)
+      };
+      getCategory();
+    },[])
     const onFinish = (values: ProductType) => {
         console.log("Success:", values);
-        const newValues = {...values,_id:id}
+        const newValues = {...values,_id:id,image: url}
         console.log(newValues);
-        
         props.onUpdate(newValues);
-        // navigate("/admin/product");
       };
     
       const onFinishFailed = (errorInfo: any) => {
@@ -65,12 +110,28 @@ const ProductEdit = (props: ProductEditProps) => {
     >
       <Input.TextArea />
     </Form.Item>
-    <Form.Item label="URL" name="image" rules={[{ required: true, message:"Please input image" }]}>
-      <Input placeholder="input placeholder" />
-    </Form.Item>
-    <Form.Item label="Category" name="category" rules={[{ required: true, message:"Please sellect category" }]}>
-      <Input />
-    </Form.Item>
+    <Form.Item label="Image" name="image">
+    <ImgCrop>
+<Upload
+        accept="image/*"
+        customRequest={uploadImage}
+        onChange={handleOnChange}
+        listType="picture-card"
+        defaultFileList={defaultFileList}
+        className="image-upload-grid"
+      >
+        {defaultFileList.length < 5  && '+ Upload'}
+      </Upload>
+</ImgCrop>
+</Form.Item>
+<Form.Item label="Select" name="category" >
+        <Select>
+          {category && category.map((item : ProductType,index) => { 
+            return <Select.Option key={index} value={item._id}>{item.name}</Select.Option>
+          }
+          )}
+        </Select>
+      </Form.Item>
     <Form.Item
       label="Stocking"
       name="status"

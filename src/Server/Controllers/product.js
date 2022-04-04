@@ -7,7 +7,9 @@ export const list = async (req, res) => {
     res.json(product)
     }
     catch (error){
-console.log(error);
+res.status(400).json({
+    message: "Không lấy được danh sách sản phẩm"
+})
     }
 }
 //Create
@@ -18,7 +20,7 @@ export const create = async (req, res) => {
         res.json(product);
     } catch (error) {
         res.status(400).json({
-            error: "Không thêm được sản phẩm"
+            message: "Không thêm được sản phẩm"
         })
     }
 }
@@ -28,8 +30,10 @@ export const get = async (req, res) => {
     const product = await Product.findOne({ _id : req.params.id}).exec()
     res.json(product)
    }
-   catch (err) {
-       console.log(err);
+   catch (error) {
+      res.status(400).json({
+          message: "Không lấy được sản phẩm"
+      })
    }
 }
 //Update
@@ -41,8 +45,10 @@ export const update =  async (req, res) => {
         const product = await Product.findOneAndUpdate(condition,update,options).exec()
         res.json(product)
        }
-       catch (err) {
-           console.log("Khong  update dc");
+       catch (error) {
+          res.status(400).json({
+              message: `Không thể cập nhật sản phẩm`
+          })
        }
 }
 //Delete
@@ -52,7 +58,9 @@ export const remove = async (req, res) => {
   const product = await Product.findOneAndDelete(condition)
   res.json(product)
   }
-  catch (err) {
-console.log(err);
+  catch (error) {
+res.status(400).json({
+    message: "Không thể xoá sản phẩm"
+})
   }
 }

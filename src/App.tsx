@@ -25,10 +25,14 @@ import Home from "./Client/Pages/website/Home";
 import { signin, signup } from "./Client/Api/auth";
 import { UserType } from "./Client/Types/user";
 import {useNavigate} from "react-router-dom"
+import { Categorylist } from "./Client/Api/category";
+import { CategoryType } from "./Client/Types/category";
+import { authenticate } from "./Client/utils/localStorage";
 const App = () => {
   const navigate = useNavigate()
   //Products
   const [products, setProducts] = useState<ProductType[]>([]); 
+  const [category, setCategory] = useState<CategoryType[]>([]);
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await productList();
@@ -39,6 +43,7 @@ const App = () => {
   }, []);
 
   const handleRemove = async (id :number)=>{
+  try {
     Modal.confirm({
       title: 'Are you sure to remove this product ?',
       onOk: async () => {
@@ -48,6 +53,9 @@ const App = () => {
         setProducts(products.filter(item => item._id !== id));
       }
     })
+  } catch (error:any) {
+    message.error(`${error.response.data.message}`,2);
+  }
   }
   const handleAdd = async (product: ProductType) =>{
 try {
@@ -58,14 +66,14 @@ try {
 }
   }
   const handleUpdate = async (product: ProductType) =>{
-    console.log(product);
-    
   try {  
     const {data} = await updateProduct(product);
     setProducts(products.map(item => item._id == data._id ? data : item));
-    console.log("ok");
-  } catch (error) {
-    console.log("Khong thanh cong");
+    message.success('Update product successfully',2);
+    navigate("/admin/product")
+    
+  } catch (error:any) {
+    message.error(`${error.response.data.message}`,2);
   }
   }
   //SignIn
@@ -77,8 +85,10 @@ try {
        message: `Login successfully!!`,
        description: `Welcome to my website ${data.user.name}`
      })
-     localStorage.setItem('user',JSON.stringify(data));
-     navigate('/')
+     authenticate(data, () => {
+      navigate('/')
+  })
+     
    } catch (error:any) {
     notification.error({
       message: `Login failed !!`,
@@ -102,15 +112,23 @@ const handleSignUp = async (user : UserType) => {
     
   }
 }
+
+useEffect(() => {
+  const getCategory = async () => {
+    const {data} = await Categorylist()
+    setCategory(data)
+  }
+  getCategory()
+},[])
   return (
     <div className="App ">
       <Routes>
-        <Route element={<WebsiteLayout />}>
-        <Route path="/" element={<Home products={products} />} />
+        <Route element={<WebsiteLayout/>}>
+        <Route path="/" element={<Home products={products} category={category} />} />
         <Route path="sign-in" element={<SignIn onSignin={handleSignIn} />} />
         <Route path="sign-up" element={<SignUp onSignup={handleSignUp} />} />
         </Route>
-        <Route path="admin" element={<AdminLayout/>}>
+        <Route path="admin" element={<PrivateRouter><AdminLayout/></PrivateRouter>}>
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="product">

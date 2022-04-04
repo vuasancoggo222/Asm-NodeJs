@@ -16,7 +16,7 @@ export const isAuth = (req, res, next) => {
 export const isAdmin = (req, res, next) => {
     if(req.profile.role == 0) {
         res.status(401).json({
-            message: "Bạn không phải là admin. Chim cút"
+            message: "Bạn không phải là admin."
         })
     }
     next();

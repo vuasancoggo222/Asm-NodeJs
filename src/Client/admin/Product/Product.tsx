@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductType } from "../../Types/product";
 import { Table, Tag, Space, Button, Modal,notification,message } from "antd";
 import { PlusSquareOutlined } from "@ant-design/icons";
+import { Categorylist } from "../../Api/category";
 type ProductManagerProps = {
   data: ProductType[];
   onRemove: (id: number) => void;
@@ -13,10 +14,11 @@ type DataType = {
   price: number;
   status: boolean;
   description: string;
-  thumbnail?: any;
+  image?: any;
   category: string;
 };
 const ProductManager = (props: ProductManagerProps) => {
+  const [category,setCategory] = useState([])
   const [visible, setVisible] = useState(false);
   const [description,setDescription] = useState([]);
   const getDescription =(record:any) =>{
@@ -24,6 +26,14 @@ const ProductManager = (props: ProductManagerProps) => {
     console.log(record);
     setDescription(record);
   }
+  useEffect(()=>{
+  const getCategory = async () =>{
+    const {data} = await Categorylist()
+    console.log(data);
+    setCategory(data)
+  }
+  getCategory()
+  },[])
   const columns = [
     {
       title: "#",
@@ -48,15 +58,15 @@ const ProductManager = (props: ProductManagerProps) => {
     {
       title: "Thumbnail",
       key: "thumbnail",
-      // dataIndex: "thumbnail",
-      render :() => <img src="https://i.picsum.photos/id/574/100/100.jpg?hmac=m3h5bdn1HntN4XBt3g-QOp_RbY6ImWEtlNCcCDVdFIc" alt="" />
+     
+      render :(record:any) => <img src={record.image.url} style={{ width: "80px"}} alt="" />
     },
     {
       title: "Description",
       key: "description",
       dataIndex: "description",
       render: (record: any) => (
-        <Button onClick={()=> getDescription(record)}>Xem chi tiết</Button>
+        <Button onClick={()=> getDescription(record)}>View this description</Button>
       ),
     },
     {
@@ -92,7 +102,7 @@ const ProductManager = (props: ProductManagerProps) => {
       price: item.price,
       status: item.status,
       description: item.description,
-      thumbnail: item.image,
+      image: item.image[0],
       category: item.category,
     };
   });
