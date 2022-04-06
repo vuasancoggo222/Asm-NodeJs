@@ -8,8 +8,8 @@ const {user} = isAuthenticate()
     }
   }
 export const productList = () => {
-  const url = `products/${user._id}`;
-  return instance.get(url,header);
+  const url = `products`;
+  return instance.get(url);
 };
 export const createProduct = (product: ProductType) => {
   const url = `products/${user._id}`;
@@ -28,6 +28,6 @@ export const read = ( id : number ) => {
     return instance.delete(url,header);
   };
   export const getLatest = (limit : number) =>{
-    const url = `products-latest/limit=${limit}`
+    const url = `products-latest?limit=${limit}`
     return instance.get(url,header)
   }

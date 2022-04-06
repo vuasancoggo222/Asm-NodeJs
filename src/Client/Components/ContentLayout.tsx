@@ -1,4 +1,5 @@
 import { Col, Row, Slider } from 'antd'
+import { Content } from 'antd/lib/layout/layout'
 import React from 'react'
 import { ProductType } from '../Types/product'
 type Props = {
@@ -10,12 +11,13 @@ const ContentLayout = (props: Props) => {
   
   const style = {padding: '8px 0' };
   return (
-   <div style={{marginLeft:"120px"}}>
+   <Content>
+     <div style={{marginLeft:"120px"}}>
    <div>
      <h2 style={{textAlign: 'center'}}>Sản phẩm mới nhất</h2>
    <Row gutter={[32, 32]}>
-    {props.latestProduct && props.latestProduct.map((item) => {
-      return <Col span={6}>
+    {props.latestProduct && props.latestProduct.map((item,index) => {
+      return <Col span={6} key={index}>
       <div style={style}>
         <img src={item.image[0].url} width="240px" alt="" />
        <div style={{textAlign: 'center'}}>
@@ -30,6 +32,7 @@ const ContentLayout = (props: Props) => {
    </div>
   
    </div>
+   </Content>
   )
 }
 

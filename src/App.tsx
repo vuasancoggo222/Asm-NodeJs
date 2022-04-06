@@ -29,6 +29,7 @@ import { Categorylist } from "./Client/Api/category";
 import { CategoryType } from "./Client/Types/category";
 import { authenticate } from "./Client/utils/localStorage";
 import Products from "./Client/Pages/website/Products";
+import ProductDetail from "./Client/Pages/website/ProductDetail";
 const App = () => {
   const navigate = useNavigate()
   //Products
@@ -106,6 +107,7 @@ const handleSignUp = async (user : UserType) => {
       message: `Register successfully!!`,
       description: `Please login your account`
     })
+    navigate('/sign-in')
   } catch (error:any) {
     notification.error({
       message: `Login failed !!`,
@@ -132,13 +134,15 @@ useEffect(() => {
   }
   getLatestProducts()
 },[])
+
   return (
     <div className="App ">
       <Routes>
         <Route element={<WebsiteLayout/>}>
         <Route path="/" element={<Home products={products} category={category} latestProduct={latestProduct} />} />
-        <Route path="products" element={<SignIn onSignin={handleSignIn} />} />
-        <Route path="sign-in" element={<Products/>} />
+        <Route path="products" element={<Products products={products} />} />
+        <Route path="product-detail/:id" element={<ProductDetail/>} />
+        <Route path="sign-in" element={<SignIn onSignin={handleSignIn} />} />
         <Route path="sign-up" element={<SignUp onSignup={handleSignUp} />} />
         </Route>
         <Route path="admin" element={<PrivateRouter><AdminLayout/></PrivateRouter>}>

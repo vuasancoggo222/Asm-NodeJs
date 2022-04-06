@@ -9,7 +9,7 @@ const HeaderLayout = (props: Props) => {
    <div className="container-fluid">
      <Header style={{background: 'white'}} className="header">
      <div className="logo" style={{ height:0}}>
-       <img src="https://genk.mediacdn.vn/2020/1/2/7-15779563301001730391840.png" style={{width:"40px",position:"relative",top:"20px",borderRadius:"5px"}} />
+       <img src="https://genk.mediacdn.vn/2020/1/2/7-15779563301001730391840.png" style={{width:"40px",position:"relative",top:"5px",borderRadius:"5px"}} />
      </div>
        <Menu theme="light" mode="horizontal" defaultSelectedKeys={['home']}>
          <MenuItem style={{ marginLeft: "160px" }} key="home"><NavLink to="/">Home</NavLink></MenuItem>

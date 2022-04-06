@@ -66,7 +66,7 @@ res.status(400).json({
 }
 // Get latest product
 export const getLatest = async (req, res) => {
-const limit = req.params.limit
+const limit = req.query.limit
 try {
     const product = await Product.find().sort({_id : -1}).limit(limit)
     res.json(product)
