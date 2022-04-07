@@ -1,9 +1,11 @@
 import Product  from "../Models/product"
 
 //GetAll
-export const list = async (req, res) => {
+export const get = async (req, res) => {
+    const {limit,page,sortBy} = req.query
+    const start = (page - 1) * limit
     try {
-    const product = await Product.find({})
+    const product = await Product.find({}).limit(limit).skip(start).sort(sortBy)
     res.json(product)
     }
     catch (error){
@@ -25,9 +27,9 @@ export const create = async (req, res) => {
     }
 }
 //GetOne
-export const get = async (req, res) => {
+export const getOne = async (req, res) => {
    try {
-    const product = await Product.findOne({ _id : req.params.id}).exec()
+    const product = await Product.findOne({ _id : req.params.id}).populate('category').exec()
     res.json(product)
    }
    catch (error) {
@@ -75,4 +77,45 @@ try {
         message: "Không thể lấy sản phẩm mới nhất"
     })
 }
+}
+export const search = async (req, res) => {
+    const keyword = req.query.q
+    console.log(keyword);
+    try {
+       if(keyword ==""){
+        return res.status(400).json({
+            message: "Vui lòng nhập từ khoá"
+        }) 
+       }
+       if(keyword){
+        const product = await Product.find({name:{ $regex : keyword,$options : "i"}})
+        if(product==""){
+            return res.status(400).json({
+                message: `Không có sản phẩm phù hợp với từ khoá : ${keyword}`
+            })
+        }
+        return res.json(product)
+       }
+       
+    } catch (error) {
+       res.status(400).json({
+        message : "Không thể tìm kiếm"
+       })
+    }
+}
+export const filter = async (req, res) => {
+    const {lte,gte} = req.query
+    try {
+        if(gte > lte){
+            res.status(400).json({
+                message : "Giá trị gte không thể l"
+            })
+        }
+        const product = await Product.find({ price :{$lte:lte,$gte : gte}})
+        res.json(product)
+    } catch (error) {
+        res.status(400).json({
+            message : "Không lọc được sản phẩm"
+        })
+    }
 }
