@@ -1,5 +1,5 @@
 import Product  from "../Models/product"
-
+import path from "path";
 //GetAll
 export const get = async (req, res) => {
     const {limit,page,sortBy} = req.query
@@ -16,13 +16,20 @@ res.status(400).json({
 }
 //Create
 export const create = async (req, res) => {
-    console.log(req.body)
+console.log(req.file.path);
     try {
-        const product = await new Product(req.body).save();
+        const product = await new Product({
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            price: req.body.price,
+            status: req.body.status,
+            image: req.file
+        }).save();
         res.json(product);
     } catch (error) {
         res.status(400).json({
-            message: "Không thêm được sản phẩm"
+            message : error.message
         })
     }
 }
