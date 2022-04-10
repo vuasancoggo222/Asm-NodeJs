@@ -13,6 +13,6 @@ router.put('/product/:id/:userId',requiredSigin,isAuth,isAdmin,upload.single('im
 router.get('/products-latest',getLatest)
 router.get('/products/search',search)
 router.get('/products/filter')
-router.param('userId', userById)m
+router.param('userId', userById)
 
 export default router;
