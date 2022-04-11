@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "start": "nodemon ./src/server.js --exec babel-node -e js",
+    "start": "node ./src/server.js --exec babel-node -e js",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
