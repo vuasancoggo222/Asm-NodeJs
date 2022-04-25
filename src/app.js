@@ -12,14 +12,11 @@ app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json())
 app.use(express.static('src'))
-app.use('/',(req, res)=>{
-    res.json({message: 'Hello'})
-})
 app.use("/api",productRoute)
 app.use("/api",categoryRoute)
 app.use("/api",authRoute)
 //connect Database
-mongoose.connect("mongodb://localhost:27017/assignment")
+mongoose.connect("mongodb+srv://levu16082002:16082002vu@cluster0.eze3y.mongodb.net/assignment?retryWrites=true&w=majority")
     .then(() => console.log("Ket noi DB thanh cong"))
     .catch(error => console.log(error))
     
