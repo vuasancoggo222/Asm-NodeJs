@@ -118,14 +118,18 @@ export const search = async (req, res) => {
 }
 export const filter = async (req, res) => {
     const { lte, gte } = req.query
+    console.log(lte);
     try {
-        if (gte > lte) {
-            res.status(400).json({
-                message: "Giá trị gte không thể lte"
-            })
+        if(lte||gte){
+            const product = await Product.find({ price: { $lte: lte, $gte: gte } })
+            if(product ==""){
+                return res.status(400).json({
+                    message:"Không có sản phẩm trong khoảng giá"
+                })
+            }
+            return res.json(product)
         }
-        const product = await Product.find({ price: { $lte: lte, $gte: gte } })
-        res.json(product)
+       
     } catch (error) {
         res.status(400).json({
             message: "Không lọc được sản phẩm"
