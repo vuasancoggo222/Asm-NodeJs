@@ -25,4 +25,4 @@ const PORT = 8001;
 app.listen(PORT, () => {
     console.log("Server của bạn đang chạy cổng ", PORT);
 });
-app.timeout = 10000
+
