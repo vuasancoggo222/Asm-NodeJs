@@ -3,21 +3,21 @@
     "builds": [
         {
             "src": "./src/app.js",
-<<<<<<< HEAD
             "use": "@vercel/node"
             
         },
         {
-            "src": "./src/app.js",
+            "src": "/src",
             "use": "@vercel/static"
-            
-=======
-            "use": "@vercel/node",
-            "use": "@vercel/static",
->>>>>>> 18a1a77972ac57d18445a4fbaabc23fb163cee31
         }
+
+      
     ],
     "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/src/app.js"
+        },
         {
             "src": "/(.*)",
             "dest": "/src/app.js"
