@@ -6,9 +6,9 @@
             "use": "@vercel/node",
         },
          {
-            "src": "./src/app.js",
+            "src": "./src",
             "use": "@vercel/static",
-        }
+        },
     ],
     "routes": [
         {
