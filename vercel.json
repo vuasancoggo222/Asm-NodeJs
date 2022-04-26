@@ -4,6 +4,9 @@
         {
             "src": "./src/app.js",
             "use": "@vercel/node",
+        },
+         {
+            "src": "./src/app.js",
             "use": "@vercel/static",
         }
     ],
