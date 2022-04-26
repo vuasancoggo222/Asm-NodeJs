@@ -3,6 +3,7 @@
     "builds": [
         {
             "src": "./src/app.js",
+<<<<<<< HEAD
             "use": "@vercel/node"
             
         },
@@ -10,6 +11,10 @@
             "src": "./src/app.js",
             "use": "@vercel/static"
             
+=======
+            "use": "@vercel/node",
+            "use": "@vercel/static",
+>>>>>>> 18a1a77972ac57d18445a4fbaabc23fb163cee31
         }
     ],
     "routes": [
