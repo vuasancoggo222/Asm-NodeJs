@@ -9,9 +9,6 @@
             "src": "/src/app.js",
             "use": "@vercel/static"
         },
-          {
-            "public": true
-          }
     ],
     "routes": [
         {
@@ -19,7 +16,7 @@
             "dest": "/src/app.js"
         },
         {
-            "src": "/public/uploads/(.*)",
+            "src": "/public",
             "dest": "/src/app.js:"
         }
     ]
