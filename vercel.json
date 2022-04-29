@@ -16,7 +16,7 @@
             "dest": "/src/app.js"
         },
         {
-            "src": "/public/(.*)",
+            "src": "/public/uploads/(.*)",
             "dest": "/src/app.js:"
         }
     ]
