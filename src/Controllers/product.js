@@ -1,5 +1,4 @@
 import Product from "../Models/product"
-import cloudinary from "../Middlewares/cloudinay"
 //GetAll
 export const get = async (req, res) => {
     const { limit, page, sortBy } = req.query
@@ -16,23 +15,8 @@ export const get = async (req, res) => {
 }
 //Create
 export const create = async (req, res) => {
-    console.log(req.file);
     try {
-        const cloudinaryFile = await cloudinary.uploader.upload(req.file.path,{
-            public_id : req.body._id,
-            width : 300,
-            height : 300,
-            crop: "fill"
-        })
-        console.log(cloudinaryFile);
-        const product = await new Product({
-            name: req.body.name,
-            description: req.body.description,
-            category: req.body.category,
-            price: req.body.price,
-            status: req.body.status,
-            image: cloudinaryFile.secure_url
-        }).save();
+        const product = await new Product(req.body).save();
         res.json(product);
     } catch (error) {
         res.status(400).json({
