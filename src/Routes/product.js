@@ -8,7 +8,7 @@ const router = Router();
 router.get('/products',get);
 router.post('/products/:userId',create);
 router.get('/product/:id',getOne);
-router.delete('/product/:id/:userId',remove);
+router.delete('/product/:id',remove);
 router.put('/product/:id/:userId',update);
 router.get('/products-latest',getLatest)
 router.get('/products/search',search)
