@@ -11,7 +11,11 @@ const ProductSchema = new Schema({
         type : Number,
         required : true
     },
-    category:{
+    sale_price:{
+        type : Number,
+        default : 0
+    },
+    category_id:{
         type : ObjectId,
         ref: "Category",
         required : true
