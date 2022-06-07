@@ -4,7 +4,7 @@ export const get = async (req, res) => {
     const { limit, page, sortBy } = req.query
     const start = (page - 1) * limit
     try {
-        const product = await Product.find({}).populate('category').limit(limit).skip(start).sort({price : sortBy})
+        const product = await Product.find({}).populate('category_id').limit(limit).skip(start).sort({price : sortBy})
         res.json(product)
     }
     catch (error) {
