@@ -27,7 +27,7 @@ export const create = async (req, res) => {
 //GetOne
 export const getOne = async (req, res) => {
     try {
-        const product = await Product.findOne({ _id: req.params.id }).populate('category').exec()
+        const product = await Product.findOne({ _id: req.params.id }).populate('category_id').exec()
         res.json(product)
     }
     catch (error) {
