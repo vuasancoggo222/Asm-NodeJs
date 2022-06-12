@@ -14,3 +14,15 @@ export const userById = async (req, res, next, id) => {
         console.log(error);
     }
 }
+export const remove = async (req, res) => {
+    const condition = { _id: req.params.id }
+    try {
+        const user = await User.findOneAndDelete(condition)
+        res.json(user)
+    }
+    catch (error) {
+        res.status(400).json({
+            message: "Không thể xoá users"
+        })
+    }
+}
