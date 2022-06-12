@@ -30,3 +30,17 @@ export const read = async (req, res) => {
         })
     }
 }
+export const update = async (req, res) => {
+    const condition = { _id : req.params.id }
+    const update = req.body
+    const options = { new: true }
+    try {
+        const category = await Category.findOneAndUpdate(condition, update, options).exec()
+        res.json(category)
+    }
+    catch (error) {
+        res.status(400).json({
+            message: `Không thể cập nhật danh mục`
+        })
+    }
+}
