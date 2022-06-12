@@ -47,7 +47,7 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
     const condition = { _id: req.params.id }
     try {
-        const category = await Product.findOneAndDelete(condition)
+        const category = await Category.findOneAndDelete(condition)
         res.json(category)
     }
     catch (error) {
