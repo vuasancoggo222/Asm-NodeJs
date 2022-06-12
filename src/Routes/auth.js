@@ -5,5 +5,5 @@ const router = Router();
 
 router.post('/signup',signup);
 router.post('/signin',signin);
-router.delete('/users',remove);
+router.delete('/users/:id',remove);
 export default router;
