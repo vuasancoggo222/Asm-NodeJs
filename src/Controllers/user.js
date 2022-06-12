@@ -26,3 +26,15 @@ export const remove = async (req, res) => {
         })
     }
 }
+export const get = async (req, res) => {
+    try {
+        const users = await User.find().exec()
+        res.json(users)
+    }
+    catch (error) {
+        res.status(400).json({
+            message: "Không lấy được danh sách users"
+        })
+    }
+}
+//
