@@ -44,3 +44,15 @@ export const update = async (req, res) => {
         })
     }
 }
+export const remove = async (req, res) => {
+    const condition = { _id: req.params.id }
+    try {
+        const category = await Product.findOneAndDelete(condition)
+        res.json(category)
+    }
+    catch (error) {
+        res.status(400).json({
+            message: "Không thể xoá danh mục"
+        })
+    }
+}
