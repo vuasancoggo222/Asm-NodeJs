@@ -31,6 +31,7 @@ const ProductSchema = new Schema({
     },
     status:{
         type : Boolean,
+        default : 1
     } 
 },{timestamps: true})
 export default  mongoose.model('Product',ProductSchema)
