@@ -42,7 +42,7 @@ export const update = async (req, res) => {
     const update = {
         name: req.body.name,
         description: req.body.description,
-        category: req.body.category_id,
+        category_id: req.body.category_id,
         price: req.body.price,
         status: req.body.status,
         image: req.body.image
