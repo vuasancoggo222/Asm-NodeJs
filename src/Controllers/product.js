@@ -45,7 +45,8 @@ export const update = async (req, res) => {
         category_id: req.body.category_id,
         price: req.body.price,
         status: req.body.status,
-        image: req.body.image
+        image: req.body.image,
+        sale_price: req.body.sale_price,
     }
     const options = { new: true }
     try {
