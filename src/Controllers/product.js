@@ -73,7 +73,7 @@ export const remove = async (req, res) => {
 }
 // Get latest product
 export const getLatest = async (req, res) => {
-    const limit = req.query.limit
+    const limit = req.query.limit || 6
     try {
         const product = await Product.find().sort({ _id: -1 }).limit(limit)
         res.json(product)
